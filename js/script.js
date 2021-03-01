@@ -54,6 +54,7 @@ let start = document.getElementById('start'),
 				start.removeAttribute('disabled');
 			}
 		};
+
 		Appdata.prototype.start = function() {
 			const _this = this;
 			if (salaryAmount.value === ''){
@@ -79,9 +80,12 @@ let start = document.getElementById('start'),
 			this.getAddExpenses();
 			this.getAddIncome();
 			this.getBudget();
-
+			this.calcPeriod();
+			
 			this.showResult();
+			
 		};
+
 		Appdata.prototype.showResult = function() {
 			const _this = this;
 			budgetMonthValue.value = this.budgetMonth;
@@ -195,6 +199,7 @@ let start = document.getElementById('start'),
 			this.precentDeposit = 0;
 			this.moneyDeposit = 0;
 			this.addExpenses = [];
+			
 
 			cancel.style.display = 'none';
 			start.style.display = 'block';
@@ -244,23 +249,27 @@ let start = document.getElementById('start'),
 		Appdata.prototype.eventListeners = function (){
 			const _this = this;
 			start.addEventListener('click',  _this.start.bind( _this));
-			expensesPlus.addEventListener('click' ,  _this.addExpensesBlock( _this));
-			incomePlus.addEventListener('click' ,  _this.addIncomeBlock( _this));
+			expensesPlus.addEventListener('click' ,  _this.addExpensesBlock);
+			incomePlus.addEventListener('click' ,  _this.addIncomeBlock);
 			salaryAmount.addEventListener('keyup',  _this.check);
 			cancel.addEventListener('click' ,  _this.reset);
+			periodSelect.addEventListener('input', function () {
+				periodAmount.innerHTML = periodSelect.value;
+			});
+			
 		};
 		
 		const appdata = new Appdata();
 		console.log(appdata);
+		appdata.eventListeners();
+		
 			// start.addEventListener('click', appData.start.bind(appData));
 			// expensesPlus.addEventListener('click' , appData.addExpensesBlock);
 			// incomePlus.addEventListener('click' , appData.addIncomeBlock);
 			// salaryAmount.addEventListener('keyup', appData.check);
 			// cancel.addEventListener('click' , appData.reset.bind(appData));
 			
-			periodSelect.addEventListener('input', function () {
-				periodAmount.innerHTML = periodSelect.value;
-			});
+			
 			
 	// 				});
 			// appData.getInfoDeposit();
